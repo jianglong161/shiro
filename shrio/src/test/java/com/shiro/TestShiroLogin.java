@@ -32,11 +32,27 @@ public class TestShiroLogin {
 			e.printStackTrace();
 			
 		}
-		
+		System.out.println(subject.isAuthenticated());
 		//断言用户已经登录
 		Assert.assertEquals(true, subject.isAuthenticated());
 		//用户退出
 		subject.logout();
 				
+	}
+	@Test
+	public void testRelm(){
+		Factory<SecurityManager> factory=
+				new IniSecurityManagerFactory("classpath:shiro-realm.ini");
+		SecurityManager securityManager=factory.getInstance();
+		SecurityUtils.setSecurityManager(securityManager);
+		org.apache.shiro.subject.Subject subject=SecurityUtils.getSubject();
+		UsernamePasswordToken token=new UsernamePasswordToken("zhang","123");
+		try {
+			subject.login(token);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		System.out.println(subject.isAuthenticated());
+		subject.logout();
 	}
 }
