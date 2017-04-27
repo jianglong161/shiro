@@ -42,17 +42,19 @@ public class TestShiroLogin {
 	@Test
 	public void testRelm(){
 		Factory<SecurityManager> factory=
-				new IniSecurityManagerFactory("classpath:shiro-realm.ini");
+				new IniSecurityManagerFactory("classpath:shiro-jdbc-realm.ini");
 		SecurityManager securityManager=factory.getInstance();
 		SecurityUtils.setSecurityManager(securityManager);
 		org.apache.shiro.subject.Subject subject=SecurityUtils.getSubject();
-		UsernamePasswordToken token=new UsernamePasswordToken("zhang","123");
+		UsernamePasswordToken token=new UsernamePasswordToken("li","123");
 		try {
 			subject.login(token);
 		} catch (Exception e) {
 			// TODO: handle exception
+			System.out.println("ss");
 		}
 		System.out.println(subject.isAuthenticated());
 		subject.logout();
 	}
+	
 }
